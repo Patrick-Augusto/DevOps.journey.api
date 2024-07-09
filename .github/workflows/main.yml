@@ -1,1 +1,19 @@
+    name: CI 
 
+    on:
+        push:
+            branches:
+            - main
+  
+    jobs:
+        build:
+            name: 'Build and Push'
+            runs-on: ubuntu-latest
+
+            steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              
+        
+            - name: Build Dock Image
+              run: docker build -t p1ngo/api-journey:latest .
