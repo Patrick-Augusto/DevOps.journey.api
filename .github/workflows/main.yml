@@ -26,13 +26,12 @@
                 username: ${{ secrets.DOCKERHUB_USERNAME }}
                 password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-            - name: Build Dock Image
-              run: docker build -t p1ngo/api-journey:${{steps.commit_hash.outputs.sha}} .
-            
-            - name: Push Docker Image
-              run: |
-                 docker push p1ngo/api-journey:${{steps.commit_hash.outputs.sha}}
-                 docker tag p1ngo/api-journey:${{steps.commit_hash.outputs.sha}} p1ngo/api-journey:latest
-                 docker push p1ngo/api-journey:latest
 
-            
+            - name: Build and push
+              uses: docker/build-push-action@v6
+              with:
+                context: .
+                push: true
+                tags: |
+                  p1ngo/api-journey:${{steps.commit_hash.outputs.sha}}
+                  p1ngo/api-journey:latest
