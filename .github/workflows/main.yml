@@ -28,5 +28,11 @@
 
             - name: Build Dock Image
               run: docker build -t p1ngo/api-journey:${{steps.commit_hash.outputs.sha}} .
+            
+            - name: Push Docker Image
+              run: |
+                 docker push p1ngo/api-journey:${{steps.commit_hash.outputs.sha}}
+                 docker tag p1ngo/api-journey:${{steps.commit_hash.outputs.sha}} p1ngo/api-journey:latest
+                 docker push p1ngo/api-journey:latest
 
             
