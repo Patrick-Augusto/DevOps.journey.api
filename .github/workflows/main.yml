@@ -13,7 +13,13 @@
             steps:
             - name: Checkout
               uses: actions/checkout@v4
-              
-        
+
+            - name: Get Commit Hash
+              id: commit_hash
+              run: |
+                SHA=${echo $GITHUB_SHA | head -c7}
+                echo "sha=$SHA" >> $GITHUB_OUTPUT
+                
+
             - name: Build Dock Image
-              run: docker build -t p1ngo/api-journey:latest .
+              run: docker build -t p1ngo/api-journey:${{steps.commit_hash.outputs.sha}} .
