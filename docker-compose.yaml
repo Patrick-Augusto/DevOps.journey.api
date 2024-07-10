@@ -1,11 +1,12 @@
 version: '3.8'
 
 services:
+
   api:
-    container_name:  api
     build: .
+    container_name: api
     ports:
-      - "8080:8080"
+      - 8080:8080
     environment:
       JOURNEY_DATABASE_USER: ${JOURNEY_DATABASE_USER}
       JOURNEY_DATABASE_PASSWORD: ${JOURNEY_DATABASE_PASSWORD}
@@ -13,22 +14,20 @@ services:
       JOURNEY_DATABASE_PORT: ${JOURNEY_DATABASE_PORT}
       JOURNEY_DATABASE_NAME: ${JOURNEY_DATABASE_NAME}
     networks:
-      - journey 
+      - journey
 
-      
   postgres:
     image: postgres:16.2-alpine3.19
-    container_name:  api-db
+    container_name: api-db
     ports:
-      - ${JOURNEY_DATABASE_PORT}
+      - ${JOURNEY_DATABASE_PORT}:5432
     environment:
-      POSTGRES_USER: ${JOURNEY_DATABASE_USER}
+      POSTGRES_USER: ${JOURNEY_DATABASE_USER} 
       POSTGRES_PASSWORD: ${JOURNEY_DATABASE_PASSWORD}
       POSTGRES_DB: ${JOURNEY_DATABASE_NAME}
     networks:
-      - journey 
-
+      - journey
 
 networks:
-  journey: 
+  journey:
     driver: bridge

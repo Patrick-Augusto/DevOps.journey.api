@@ -13,11 +13,9 @@ import (
 )
 
 const confirmParticipant = `-- name: ConfirmParticipant :exec
-SELECT
-    "id", "trip_id", "email", "is_confirmed"
-FROM participants
-WHERE
-    id = $1
+UPDATE participants
+SET "is_confirmed" = true
+WHERE id = $1
 `
 
 func (q *Queries) ConfirmParticipant(ctx context.Context, id uuid.UUID) error {
@@ -208,9 +206,8 @@ func (q *Queries) GetTripLinks(ctx context.Context, tripID uuid.UUID) ([]Link, e
 }
 
 const insertTrip = `-- name: InsertTrip :one
-INSERT
-INTO trips
-    ( "destination", "owner_email", "owner_name", "starts_at", "ends_at") VALUES
+INSERT INTO trips
+    ( "destination", "owner_email", "owner_name", "starts_at", "ends_at" ) VALUES
     ( $1, $2, $3, $4, $5 )
 RETURNING "id"
 `
@@ -236,6 +233,25 @@ func (q *Queries) InsertTrip(ctx context.Context, arg InsertTripParams) (uuid.UU
 	return id, err
 }
 
+const inviteParticipantToTrip = `-- name: InviteParticipantToTrip :one
+INSERT INTO participants
+    ( "trip_id", "email" ) VALUES
+    ( $1, $2 )
+RETURNING "id"
+`
+
+type InviteParticipantToTripParams struct {
+	TripID uuid.UUID
+	Email  string
+}
+
+func (q *Queries) InviteParticipantToTrip(ctx context.Context, arg InviteParticipantToTripParams) (uuid.UUID, error) {
+	row := q.db.QueryRow(ctx, inviteParticipantToTrip, arg.TripID, arg.Email)
+	var id uuid.UUID
+	err := row.Scan(&id)
+	return id, err
+}
+
 type InviteParticipantsToTripParams struct {
 	TripID uuid.UUID
 	Email  string
@@ -243,7 +259,7 @@ type InviteParticipantsToTripParams struct {
 
 const updateTrip = `-- name: UpdateTrip :exec
 UPDATE trips
-SET 
+SET
     "destination" = $1,
     "ends_at" = $2,
     "starts_at" = $3,

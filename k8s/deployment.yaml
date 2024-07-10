@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: api-journey
-          image: p1ngo/api-journey:019f857
+          image: p1ngo/api-journey:b7fe322
           env:
           - name: JOURNEY_DATABASE_USER
             valueFrom:
