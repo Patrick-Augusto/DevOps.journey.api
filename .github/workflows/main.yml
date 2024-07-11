@@ -7,6 +7,7 @@ on:
 
 jobs:
     build:
+        if: ${{!contains(github.event.head_commit.message, 'Update Docker image tag to')}}
         name: 'Build and Push'
         runs-on: ubuntu-latest
 
@@ -53,5 +54,5 @@ jobs:
                 branch: Release
                 targetBranch: main
                 createPR: true
-                message: 'Update Docker image tag to ${{steps.commit_hash.outputs.sha}}'
+                message: '[skip ci]Update Docker image tag to ${{steps.commit_hash.outputs.sha}}'
            
