@@ -2,8 +2,7 @@ replicaCount: 10
 image:
   repository: p1ngo/api-journey
   pullPolicy: IfNotPresent
-  tag: 39f292c
-
+  tag: 1f59914
   containerPort: 8080
 imagePullSecrets: []
 nameOverride: ''
