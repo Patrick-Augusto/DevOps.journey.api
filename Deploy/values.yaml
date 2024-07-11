@@ -1,37 +1,27 @@
 replicaCount: 10
-
 image:
   repository: p1ngo/api-journey
   pullPolicy: IfNotPresent
-  tag: "e7b9aba"
+  tag: 39f292c
   containerPort: 8080
-
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
- 
+nameOverride: ''
+fullnameOverride: ''
 serviceAccount:
   create: true
   automount: true
   annotations: {}
-  name: ""
-
+  name: ''
 podAnnotations: {}
 podLabels: {}
-
 podSecurityContext: {}
- 
-
 securityContext: {}
- 
-
 service:
   type: ClusterIP
   port: 80
-
 ingress:
   enabled: false
-  className: ""
+  className: ''
   annotations: {}
   hosts:
     - host: chart-example.local
@@ -39,8 +29,6 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-
-
 resources: {}
 limits:
   cpu: 100m
@@ -48,29 +36,13 @@ limits:
 requests:
   cpu: 100m
   memory: 128Mi
- 
-
-#livenessProbe:
- # httpGet:
- #   path: /
- #   port: http
-#readinessProbe:
- # httpGet:
- #   path: /
- #   port: http
-
 autoscaling:
   enabled: false
   minReplicas: 10
   maxReplicas: 15
   targetCPUUtilizationPercentage: 70
-
 volumes: []
-
 volumeMounts: []
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
