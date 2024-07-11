@@ -3,6 +3,7 @@ image:
   repository: p1ngo/api-journey
   pullPolicy: IfNotPresent
   tag: 39f292c
+
   containerPort: 8080
 imagePullSecrets: []
 nameOverride: ''
