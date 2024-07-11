@@ -43,3 +43,15 @@ jobs:
             tags: |
               p1ngo/api-journey:${{steps.commit_hash.outputs.sha}}
               p1ngo/api-journey:latest
+
+        - name: Update image helm
+          uses: fjogeleit/yaml-update-action@main
+          with:
+            branch: Release
+            targetBranch: main
+            createPR: true
+            valueFile: 'Deploy/values.yaml'
+            property: 'image.tag'
+            newValue: ${{steps.commit_hash.outputs.sha}}
+            commitMessage: 'Update Docker image tag to ${{steps.commit_hash.outputs.sha}}'
+           
