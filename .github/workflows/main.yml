@@ -54,5 +54,5 @@ jobs:
                 branch: Release
                 targetBranch: main
                 createPR: true
-                message: '[skip ci]Update Docker image tag to ${{steps.commit_hash.outputs.sha}}'
+                message: '[skip ci]Update Docker image tag  to ${{steps.commit_hash.outputs.sha}}'
            
